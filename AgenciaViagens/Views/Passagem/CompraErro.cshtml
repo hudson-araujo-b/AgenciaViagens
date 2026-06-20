@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Erro na Compra";
+}
+
+<div class="pagina-centralizada">
+    <div class="card-resultado">
+        <div class="resultado-header">
+            <div class="resultado-icone resultado-icone-erro">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+            </div>
+            <h1 class="resultado-titulo">Ops! Algo deu errado</h1>
+            <p class="resultado-mensagem">
+                Não conseguimos concluir a sua compra. Ocorreu um erro ao processar a reserva ou a quantidade de assentos disponíveis esgotou.
+            </p>
+        </div>
+
+        <div class="resultado-acoes">
+            <a asp-controller="Passagem" asp-action="Index" class="btn btn-primario">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Voltar e Tentar Novamente
+            </a>
+        </div>
+    </div>
+</div>

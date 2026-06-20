@@ -1,0 +1,129 @@
+@model AgenciaViagens.Models.ConfiguracoesViewModel
+@{
+    ViewData["Title"] = "Seus Dados";
+    ViewData["EsconderNavbar"] = true;
+}
+
+<a class="btn-voltar-pagina" asp-controller="Passagem" asp-action="Index" title="Voltar para Passagens">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+</a>
+
+<div class="pagina-centralizada">
+    <div class="container-largo" style="max-width: 720px; width: 100%;">
+
+        <div class="card">
+            <h2 class="card-titulo">Seus Dados</h2>
+
+            @if (TempData["MensagemSucesso"] != null)
+            {
+                <div class="alerta alerta-sucesso">
+                    @TempData["MensagemSucesso"]
+                </div>
+            }
+
+            <form id="formUpdate" asp-action="Configuracoes" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="alerta alerta-erro"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="campo">
+                            <label asp-for="Nome">Nome</label>
+                            <input asp-for="Nome" placeholder="Digite seu nome" />
+                            <span asp-validation-for="Nome" class="texto-erro"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="campo">
+                            <label asp-for="Email">E-mail</label>
+                            <input asp-for="Email" placeholder="Digite seu e-mail" />
+                            <span asp-validation-for="Email" class="texto-erro"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="campo">
+                            <label asp-for="Telefone">Telefone</label>
+                            <input asp-for="Telefone" placeholder="(00) 00000-0000" />
+                            <span asp-validation-for="Telefone" class="texto-erro"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="campo">
+                            <label asp-for="Cpf">CPF</label>
+                            <input asp-for="Cpf" placeholder="000.000.000-00" />
+                            <span asp-validation-for="Cpf" class="texto-erro"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="campo">
+                            <label asp-for="Cep">CEP</label>
+                            <input asp-for="Cep" placeholder="00000-000" />
+                            <span asp-validation-for="Cep" class="texto-erro"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="campo">
+                            <label asp-for="DataNascimento">Data de Nascimento</label>
+                            <input asp-for="DataNascimento" type="text" placeholder="dd/mm/aaaa" data-val-date="" value="@(Model.DataNascimento?.ToString("dd/MM/yyyy"))" />
+                            <span asp-validation-for="DataNascimento" class="texto-erro"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primario btn-bloco">
+                            Salvar Alterações
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <hr class="voo-separador my-4" />
+
+            <div class="texto-centro mt-2">
+                <p class="texto-muted mb-3" style="font-size: var(--tamanho-xs);">
+                    Ao excluir sua conta, todas as suas informações e passagens compradas serão removidas permanentemente.
+                </p>
+                <button type="button" class="btn btn-perigo-outline btn-bloco" data-bs-toggle="modal" data-bs-target="#confirmarDeleteModal">
+                    Excluir Minha Conta
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Confirmar Exclusão -->
+<div class="modal fade" id="confirmarDeleteModal" tabindex="-1" aria-labelledby="confirmarDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-flex align-items-center justify-content-center position-relative">
+                <h5 class="modal-title text-danger fw-bold text-center w-100" id="confirmarDeleteModalLabel">Excluir Conta</h5>
+                <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Esta ação é <strong>irreversível</strong> e apagará permanentemente todos os seus dados e compras de viagens.</p>
+                <p class="mb-0">Tem certeza de que deseja excluir sua conta?</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form asp-action="DeletarConta" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">Sim, Excluir Minha Conta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,111 @@
+@model IEnumerable<AgenciaViagens.Models.VooModel>
+@{
+    ViewData["Title"] = "Passagens Disponíveis";
+    var voosList = Model.ToList();
+}
+
+<div class="container-largo mt-4">
+    <div class="secao-cabecalho">
+        <h1 class="secao-titulo mb-1">Passagens Disponíveis</h1>
+        <p class="secao-subtitulo mb-3">
+            Encontre os melhores voos e destinos para a sua próxima viagem.
+        </p>
+        <div class="texto-direita">
+            <span class="badge badge-azul badge-destaque">@voosList.Count voo(s) encontrado(s)</span>
+        </div>
+    </div>
+
+    @if (voosList.Count == 0)
+    {
+        <div class="alerta alerta-info texto-centro card">
+            <p class="voo-vazio">Não há passagens disponíveis no momento. Por favor, volte mais tarde!</p>
+        </div>
+    }
+    else
+    {
+        <div class="grid-passagens">
+            @foreach (var voo in voosList)
+            {
+                <div class="card voo-card">
+                    <div>
+                        <div class="voo-rota mb-3">
+                            <div class="voo-ponto voo-origem">
+                                <div class="voo-uf">@voo.OrigemUf</div>
+                                <div class="voo-cidade" title="@voo.Origem">@voo.Origem</div>
+                            </div>
+                            <div class="voo-conexao">
+                                <span class="voo-icone">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+                                </span>
+                            </div>
+                            <div class="voo-ponto voo-destino">
+                                <div class="voo-uf">@voo.DestinoUf</div>
+                                <div class="voo-cidade" title="@voo.Destino">@voo.Destino</div>
+                            </div>
+                        </div>
+
+                        <hr class="voo-separador" />
+
+                        <div class="voo-detalhes">
+                            <span class="voo-detalhe-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                <strong>@voo.DataViagem.ToString("dd/MM/yyyy")</strong>
+                            </span>
+                            <span class="voo-detalhe-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                <strong class="qtd-assentos" data-id="@voo.Id">@voo.PassagensDisponiveis</strong> assento(s)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="voo-preco-area">
+                        <div class="voo-preco">
+                            @voo.Preco.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
+                        </div>
+                        <form asp-controller="Passagem" asp-action="Comprar" method="post" class="w-100 form-comprar">
+                            <input type="hidden" name="vooId" value="@voo.Id" />
+                            <button type="submit" class="btn btn-primario btn-bloco">Comprar</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@if (TempData["ContaExcluida"] != null)
+{
+    <!-- Modal Conta Excluída com Sucesso -->
+    <div class="modal fade" id="contaExcluidaModal" tabindex="-1" aria-labelledby="contaExcluidaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 450px;">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: var(--raio-lg);">
+                <div class="modal-body text-center p-5">
+                    <div class="resultado-icone resultado-icone-sucesso mx-auto mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h2 class="resultado-titulo mb-2" id="contaExcluidaModalLabel">Conta Excluída!</h2>
+                    <p class="resultado-mensagem mb-4">
+                        Sua conta foi excluída com sucesso.
+                    </p>
+                    <div class="resultado-acoes justify-content-center">
+                        <button type="button" class="btn btn-primario px-5" data-bs-dismiss="modal">
+                            Entendido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var myModal = new bootstrap.Modal(document.getElementById('contaExcluidaModal'));
+                myModal.show();
+            });
+        </script>
+    }
+}

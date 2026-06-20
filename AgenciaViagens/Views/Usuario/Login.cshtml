@@ -1,0 +1,75 @@
+@model AgenciaViagens.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    ViewData["EsconderNavbar"] = true;
+}
+
+<a class="btn-voltar-pagina" asp-controller="Passagem" asp-action="Index" title="Voltar para Passagens">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+</a>
+
+<div class="pagina-centralizada">
+    <div class="container-estreito">
+
+        <div class="card">
+
+            <div class="texto-centro">
+                <a asp-action="Index" asp-controller="Passagem">
+                    <img src="~/img/rotta-icon.png" alt="Rotta" class="brand-icon" />
+                </a>
+            </div>
+
+            @if (TempData["MensagemSucesso"] != null)
+            {
+                <div class="alerta alerta-sucesso">
+                    @TempData["MensagemSucesso"]
+                </div>
+            }
+            @if (TempData["MensagemErro"] != null)
+            {
+                <div class="alerta alerta-erro">
+                    @TempData["MensagemErro"]
+                </div>
+            }
+
+            <p class="card-titulo">Acesse sua conta</p>
+
+            <form asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="alerta alerta-erro"></div>
+
+                <div class="campo">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" placeholder="Digite seu e-mail" />
+                    <span asp-validation-for="Email" class="texto-erro"></span>
+                </div>
+
+                <div class="campo">
+                    <label asp-for="Senha">Senha</label>
+                    <div class="campo-senha-wrapper">
+                        <input asp-for="Senha" type="password" placeholder="Digite sua senha" class="campo-senha-input" />
+                        <button type="button" class="btn-toggle-senha" aria-label="Mostrar senha">
+                            <svg class="olho-aberto d-none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <svg class="olho-fechado" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Senha" class="texto-erro"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primario btn-bloco mt-3">Entrar</button>
+
+                <div class="separador">ou</div>
+
+                <p class="texto-muted texto-centro mb-1">Ainda não possui conta?</p>
+                <a asp-action="CriarConta" asp-controller="Usuario" class="btn btn-fantasma btn-bloco">
+                    Criar uma nova conta
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

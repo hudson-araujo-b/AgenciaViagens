@@ -1,0 +1,61 @@
+@model IEnumerable<AgenciaViagens.Models.CompraModel>
+@{
+    ViewData["Title"] = "Histórico de Compras";
+}
+
+<div class="container-largo mt-4">
+    <div class="secao-cabecalho">
+        <h1 class="secao-titulo mb-1">Histórico de Compras</h1>
+        <p class="secao-subtitulo mb-3">
+            Confira todas as passagens adquiridas até o momento.
+        </p>
+        <div class="texto-direita">
+            <span class="badge badge-azul badge-destaque">@Model.Count() compra(s) registrada(s)</span>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alerta alerta-info texto-centro card">
+            <p class="voo-vazio">Nenhuma compra foi realizada até o momento.</p>
+        </div>
+    }
+    else
+    {
+        <div class="card-tabela">
+            <table class="tabela-compras">
+                <thead>
+                    <tr>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Data do Voo</th>
+                        <th>Preço Pago</th>
+                        <th>Data da Compra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     @foreach (var compra in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@compra.Voo?.OrigemUf</strong> - <span class="texto-cinza">@compra.Voo?.Origem</span>
+                            </td>
+                            <td>
+                                <strong>@compra.Voo?.DestinoUf</strong> - <span class="texto-cinza">@compra.Voo?.Destino</span>
+                            </td>
+                            <td class="texto-medio">
+                                @compra.Voo?.DataViagem.ToString("dd/MM/yyyy")
+                            </td>
+                            <td class="preco-compra">
+                                @compra.Voo?.Preco.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
+                            </td>
+                            <td class="texto-cinza">
+                                @compra.DataCompra.ToString("dd/MM/yyyy")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

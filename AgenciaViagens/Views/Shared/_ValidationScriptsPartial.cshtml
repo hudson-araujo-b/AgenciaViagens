@@ -1,0 +1,34 @@
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    if (typeof jQuery !== 'undefined' && $.validator) {
+        // Desativa a validação em tempo real (onkeyup, onfocusout, etc.)
+        $.validator.setDefaults({
+            onfocusout: false,
+            onkeyup: false,
+            onclick: false,
+            onsubmit: true
+        });
+
+        // Traduz as mensagens padrão para português
+        $.extend($.validator.messages, {
+            required: "Este campo é obrigatório.",
+            remote: "Por favor, corrija este campo.",
+            email: "Por favor, insira um endereço de e-mail válido.",
+            url: "Por favor, insira uma URL válida.",
+            date: "Por favor, insira uma data válida.",
+            dateISO: "Por favor, insira uma data válida (ISO).",
+            number: "Por favor, insira um número válido.",
+            digits: "Por favor, insira apenas dígitos.",
+            creditcard: "Por favor, insira um cartão de crédito válido.",
+            equalTo: "Por favor, insira o mesmo valor novamente.",
+            maxlength: $.validator.format("Por favor, insira no máximo {0} caracteres."),
+            minlength: $.validator.format("Por favor, insira no mínimo {0} caracteres."),
+            rangelength: $.validator.format("Por favor, insira um valor entre {0} e {1} caracteres."),
+            range: $.validator.format("Por favor, insira um valor entre {0} e {1}."),
+            max: $.validator.format("Por favor, insira um valor menor ou igual a {0}."),
+            min: $.validator.format("Por favor, insira um valor maior ou igual a {0}.")
+        });
+    }
+</script>

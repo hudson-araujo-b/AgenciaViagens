@@ -1,0 +1,64 @@
+@model AgenciaViagens.Models.VooModel
+@{
+    ViewData["Title"] = "Compra Realizada";
+}
+
+<div class="pagina-centralizada">
+    <div class="card-resultado">
+        <div class="resultado-header">
+            <div class="resultado-icone resultado-icone-sucesso">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h1 class="resultado-titulo">Compra Realizada!</h1>
+            <p class="resultado-mensagem">
+                Sua passagem foi reservada com sucesso!
+            </p>
+        </div>
+
+        @if (Model != null)
+        {
+            <div class="bilhete-resumo bilhete-resumo-sucesso">
+                <span class="bilhete-tag">Confirmação de Reserva</span>
+                <div class="bilhete-rota">
+                    <div class="bilhete-aeroporto">
+                        <div class="cidade">@Model.Origem</div>
+                        <div class="uf">@Model.OrigemUf</div>
+                    </div>
+                    <div class="bilhete-conexao">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                    <div class="bilhete-aeroporto bilhete-aeroporto-destino">
+                        <div class="cidade">@Model.Destino</div>
+                        <div class="uf">@Model.DestinoUf</div>
+                    </div>
+                </div>
+                <div class="bilhete-detalhes">
+                    <div class="bilhete-detalhe-item">
+                        <label>Data de Embarque</label>
+                        <span>@Model.DataViagem.ToString("dd/MM/yyyy")</span>
+                    </div>
+                    <div class="bilhete-detalhe-item bilhete-detalhe-preco">
+                        <label>Valor da Passagem</label>
+                        <span class="preco-destaque">@Model.Preco.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</span>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="resultado-acoes">
+            <a asp-controller="Passagem" asp-action="Index" class="btn btn-primario">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Voltar para Passagens
+            </a>
+        </div>
+    </div>
+</div>
